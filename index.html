@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>句拓 · Syntopo Reader v0.31</title>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>句拓 · Syntopo Reader v0.32</title>
 <style>
 :root{--ink:#22252b;--sub:#69717c;--rule:#d9dde2;--bg:#f3f4f5;--paper:#fff;--accent:#294f7d;--accent-faint:#eaf1fb;--size:14px;--small:calc(var(--size) * .90)}
 *{box-sizing:border-box} html,body{margin:0;height:100%;font-family:ui-sans-serif,system-ui,-apple-system,"Microsoft Yahei","PingFang SC",sans-serif;color:var(--ink);background:var(--bg)}button,select{font:inherit}button{cursor:pointer}button:focus-visible,[tabindex]:focus-visible{outline:2px solid #4b83bf;outline-offset:2px}button:disabled{opacity:.35;cursor:default}
@@ -667,6 +667,17 @@
 .essay[data-foreign-mode="bubble"] .entryContent:has(.foreignBubbleAnchor){align-items:baseline;row-gap:7px}
 .essay .foreignBubbleAnchor strong,.essay .foreignBubble .foreignAbbr{font-weight:780!important}
 @media(max-width:540px){.essay .foreignBubbleAnchor{max-width:min(25ch,calc(100vw - 100px))!important}}
+
+/* v0.32 — mobile nested-relation layout: never separate a brace from its rows.
+   In v0.31 the mobile .unit flex-wrap rule allowed contrast rows onto a
+   second flex line. The subsequent brace height/margin measurement then
+   amplified that otherwise empty first line into a large blank area. */
+@media(max-width:540px){
+ .essay .unit.contrast{flex-wrap:nowrap!important}
+ .essay .unit.contrast > .stackRows{flex:1 1 0;min-width:0;max-width:calc(100% - 37px)}
+}
+/* The next breakpoint previously exposed toolbar controls before they fit. */
+@media(max-width:650px){.bar #save,.bar .sizeControls{display:none}}
 </style><style id="syntopoBraceTransitionRules"></style></head>
 <body><div class="app" id="app"><header class="bar">
 <button class="b square tip" id="toggleRail" data-tip="打开／收起文稿栏" aria-label="文稿栏">☰</button><div class="logo">句拓 <small>SY N T O P O · Reader</small></div>
@@ -1765,7 +1776,7 @@ document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gearMenu,#not
 syncPrefs();syncSliders();
 $$('[data-paraview]').forEach(b=>b.addEventListener('click',()=>{stop();state.paragraphView=b.dataset.paraview;render();$('#stage').scrollTop=0}));
 $('#resetDemo').onclick=()=>{setDocument(demo());notify('已恢复示例')};$('#autoMark').onclick=()=>{setDocument(localMark(state.orig));notify('已按明确连接词进行保守标记')};$('#openSource').onclick=editSource;$('#closeModal').onclick=closeModal;$('#cancelModal').onclick=closeModal;$('#applySource').onclick=applySource;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};$('#sizeDown').onclick=()=>{state.size=Math.max(10,state.size-1);state.settings.readingSize=state.size;savePrefs();render();syncSliders()};$('#sizeUp').onclick=()=>{state.size=Math.min(20,state.size+1);state.settings.readingSize=state.size;savePrefs();render();syncSliders()};$('#play').onclick=play;$('#prev').onclick=goBack;$('#next').onclick=goNext;$('#readingSpeed').onclick=cycleSpeed;
-$('#panelSave').onclick=()=>$('#save').click();$('#save').onclick=()=>{const blob=new Blob([JSON.stringify({type:'syntopo-document',version:'0.31',source:state.orig,paras:state.paras,settings:state.settings,paragraphView:state.paragraphView,document:{name:activeDocument?.name||'文稿',format:activeDocument?.format||'txt',detail:activeDocument?.detail||''}},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='syntopo-reading-v031.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$('#panelSave').onclick=()=>$('#save').click();$('#save').onclick=()=>{const blob=new Blob([JSON.stringify({type:'syntopo-document',version:'0.30',source:state.orig,paras:state.paras,settings:state.settings,paragraphView:state.paragraphView,document:{name:activeDocument?.name||'文稿',format:activeDocument?.format||'txt',detail:activeDocument?.detail||''}},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='syntopo-reading-v030.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&!e.target.closest('input,textarea,[contenteditable]')){if(e.key.toLowerCase()==='z'){e.preventDefault();if(e.shiftKey)redoStructure();else undoStructure();return}if(e.key.toLowerCase()==='y'){e.preventDefault();redoStructure();return}}if(e.altKey&&currentSelection&&['1','2','3','4','5'].includes(e.key)){e.preventDefault();const types={'1':'and','2':'or','3':'contrast','4':'sub','5':'split'};wrapSubstring(state.paras[currentSelection.para],currentSelection.text,types[e.key]);currentSelection=null;window.getSelection()?.removeAllRanges();return}if(e.key==='Escape'){closeInlineEdit();closeModal();clearMenus();$('#notationPanel').classList.remove('open');setGearOpen(false)}if(e.code==='Space'&&!e.target.closest('button,input,[contenteditable]')&&!$('#modal').classList.contains('show')){e.preventDefault();play()}});
 
 // --- Local document inbox: files stay in the browser, never sent to a server ---
