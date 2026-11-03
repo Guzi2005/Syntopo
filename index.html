@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>句拓 · Syntopo Reader v0.32</title>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>句拓 · Syntopo Reader v0.33</title>
 <style>
 :root{--ink:#22252b;--sub:#69717c;--rule:#d9dde2;--bg:#f3f4f5;--paper:#fff;--accent:#294f7d;--accent-faint:#eaf1fb;--size:14px;--small:calc(var(--size) * .90)}
 *{box-sizing:border-box} html,body{margin:0;height:100%;font-family:ui-sans-serif,system-ui,-apple-system,"Microsoft Yahei","PingFang SC",sans-serif;color:var(--ink);background:var(--bg)}button,select{font:inherit}button{cursor:pointer}button:focus-visible,[tabindex]:focus-visible{outline:2px solid #4b83bf;outline-offset:2px}button:disabled{opacity:.35;cursor:default}
@@ -678,9 +678,102 @@
 }
 /* The next breakpoint previously exposed toolbar controls before they fit. */
 @media(max-width:650px){.bar #save,.bar .sizeControls{display:none}}
+
+/* v0.33 — mobile reading workspace: paper-first, touch-first, no card chrome. */
+.mobileBrandSub,.mobileToolsOpen,.mobileDock,.mobileSheetBackdrop,.mobileToolsPanel{display:none}
+@media(max-width:650px){
+ html,body{overscroll-behavior:none}
+ .app{grid-template-rows:52px minmax(0,1fr)}
+ .bar{padding:0 15px;gap:9px;box-shadow:none;z-index:32;border-bottom:1px solid #e9edf1}
+ .bar #toggleRail{display:inline-flex;width:38px;height:40px;flex:none;font-size:16px;color:#576474}
+ .bar .logo{font-size:17px;letter-spacing:-.035em;margin:0;flex:none}
+ .bar .logo small{display:none}
+ .mobileBrandSub{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.13em;color:#a2aebc;margin-left:1px;white-space:nowrap}
+ .bar #undoStructure,.bar #redoStructure,.bar #autoMark,.bar #toggleRaw,.bar #notationBtn,.bar #sizeDown,.bar #sizeUp,.bar #prev,.bar #play,.bar #next,.bar #readingSpeed,.bar #save,.bar>.divide{display:none!important}
+ .bar>.grow{flex:1}
+ .mobileToolsOpen{display:inline-flex;margin-left:auto;border:1px solid #e8edf2!important;background:#fff!important;color:#4f5d6e!important;height:34px!important;min-width:66px;padding:0 10px!important;font-size:12px;font-weight:650;gap:6px}
+ .mobileToolsOpen span{font-size:16px;line-height:1;letter-spacing:1px}
+ .pageShell{min-height:0}
+ .stage{background:#fff;padding:0 0 8px!important;scrollbar-gutter:auto;overscroll-behavior-y:contain}
+ .paper{border:0!important;box-shadow:none!important;border-radius:0!important;min-height:100%;width:100%;padding:23px clamp(17px,4.5vw,27px) 120px!important}
+ .paperHead{gap:12px;align-items:center;margin-bottom:25px!important;padding-bottom:14px;border-bottom:1px solid #f1f3f5}
+ .paperTitle{font-size:15px;font-weight:720;letter-spacing:.01em;line-height:1.5;min-width:0;overflow-wrap:anywhere}
+ .paperTools{flex:none;gap:0}
+ .viewSwitch{padding:3px;border-radius:6px!important;background:#f4f6f8;border:1px solid #ebeff3}
+ .viewSwitch button{min-height:28px;padding:3px 8px;border-radius:4px!important;font-size:11px}
+ .essay{line-height:1.77;letter-spacing:.007em;-webkit-text-size-adjust:100%}
+ .essay .para{padding-left:17px;margin-bottom:30px;scroll-margin-top:15px}
+ .essay .pnum{font-size:10px;left:0;top:3px}
+ .essay .paragraphFlow{row-gap:7px}
+ .essay .unit:is(.stack,.contrast){gap:6px}
+ .essay .unit:is(.stack,.contrast)>.brace{margin-left:4px;margin-right:0;flex-basis:15px;min-width:15px;width:15px}
+ .status{margin-top:34px;padding-top:14px;gap:7px 12px;line-height:1.6;font-size:10px}
+ .footer{padding-top:22px;font-size:10px}
+ /* Fixed, safe-area-aware six-action transport. */
+ .mobileDock{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 1.22fr repeat(2,minmax(0,1fr));align-items:stretch;gap:2px;position:fixed;left:0;right:0;bottom:0;min-height:70px;padding:6px 7px calc(6px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.97);border-top:1px solid #e4e9ef;z-index:63;box-shadow:0 -5px 20px #273b4a0a;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+ .mobileDock button{min-width:0;min-height:54px;background:transparent;color:#6b7888;border:0;border-radius:7px!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:4px 1px;font:600 10px/1.2 ui-sans-serif,system-ui,"Microsoft Yahei",sans-serif;touch-action:manipulation}
+ .mobileDock button svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linejoin:round;stroke-linecap:round}
+ .mobileDock button:active{background:#f2f5f8}
+ .mobileDock button[aria-pressed=true],.mobileDock button.is-current{color:#295982}
+ .mobileDock button:focus-visible{outline:2px solid #7da5ce;outline-offset:-3px}
+ .mobileDock .mobilePlay{background:#29486a;color:#fff;min-height:54px;border-radius:7px!important;gap:1px}
+ .mobileDock .mobilePlay[aria-pressed=true]{background:#56748f;color:white}
+ .mobileDock .mobilePlay:disabled{opacity:.42}
+ .mobileDock .mobilePlay svg{width:21px;height:21px}
+ .mobileDock .mobilePlay span{font-weight:700;font-size:10px}
+ .rail{top:52px!important;bottom:0!important;z-index:85!important;width:min(330px,calc(100vw - 38px))!important}
+ .railBackdrop{inset:52px 0 0!important;z-index:84!important}
+ .railHeader{min-height:48px}
+ .railHeader #railClose{width:36px;height:36px;display:inline-flex}
+ .importActions button{min-height:40px}
+ .docEntry{min-height:53px}
+ #toc .tocToggle{padding-top:13px;padding-bottom:13px}
+ #toc .tocJump{width:36px;height:36px;margin-top:7px}
+ .mobileSheetBackdrop{position:fixed;display:block;inset:0;z-index:74;background:rgba(22,33,47,.36);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility .22s}
+ .mobileSheetBackdrop.is-open{opacity:1;visibility:visible;pointer-events:auto}
+ .gearMenu{width:100%!important;max-width:none!important;left:0!important;right:0!important;top:auto!important;bottom:0!important;z-index:78!important;transform:translateY(20px)!important;border-radius:15px 15px 0 0!important;border-bottom:0;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));transform-origin:bottom center}
+ .gearMenu.open{transform:translateY(0)!important}
+ .gearMenu button{min-height:60px;border-bottom:1px solid #f0f2f5;border-radius:4px!important;padding:10px 13px}
+ .gearMenu button span{font-size:13px}
+ .gearMenu button small{font-size:11px}
+ .notationPanel{position:fixed!important;z-index:78!important;top:auto!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;max-width:100%!important;max-height:min(88dvh,750px)!important;overflow-y:auto;border-radius:15px 15px 0 0!important;border-bottom:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+ .notationHeader{padding:17px 18px 12px;min-height:54px}
+ .notationHeader .b{height:37px;width:37px}
+ .prefsBody{padding:14px 16px;gap:17px}
+ .prefsToggle{min-height:43px}
+ .choice{min-height:44px}
+ .mobileToolsPanel{position:fixed;display:block;z-index:78;left:0;right:0;bottom:0;max-height:85dvh;overflow-y:auto;overscroll-behavior:contain;background:#fff;border-radius:15px 15px 0 0;padding:0 16px calc(23px + env(safe-area-inset-bottom,0px));box-shadow:0 -16px 45px #182d451e;transform:translateY(105%);visibility:hidden;transition:transform .25s cubic-bezier(.22,.79,.23,1),visibility .25s}
+ .mobileToolsPanel.open{transform:translateY(0);visibility:visible}
+ .mobileSheetHeader{display:flex;align-items:center;justify-content:space-between;min-height:58px;border-bottom:1px solid #ebeff3;margin-bottom:16px}
+ .mobileSheetHeader strong{font-size:15px}
+ .mobileSheetHeader button{border:0;background:#f3f5f7;color:#637386;width:32px;height:32px;border-radius:6px;font-size:20px;cursor:pointer}
+ .mobileToolTitle{color:#8a97a6;font-size:10px;letter-spacing:.08em;font-weight:750;margin:16px 0 7px}
+ .mobileToolsGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .mobileToolsGrid button{border:1px solid #e2e8ef;border-radius:7px;min-height:50px;background:#fff;color:#4b5c6e;font-size:12px;font-weight:650;display:flex;align-items:center;justify-content:center;gap:7px;padding:7px 5px;cursor:pointer}
+ .mobileToolsGrid button:active{background:#f1f5f9}
+ .mobileToolsGrid button .toolSymbol{font-size:19px;color:#7c9aae;font-weight:400}
+ .mobileToolsGrid button:disabled{opacity:.4}
+ .menu.show{z-index:88;max-width:calc(100vw - 18px)}
+ .inlineEdit{z-index:88}
+ .modalBackdrop{z-index:92;align-items:flex-end;padding:0}
+ .dialog{max-height:91dvh;border-radius:13px 13px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
+ .dialogActions button{min-height:42px}
+ .toast{bottom:calc(79px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 28px);text-align:center;white-space:normal}
+}
+@media(max-width:360px){
+ .bar{padding:0 9px;gap:5px}
+ .mobileBrandSub{font-size:8px;letter-spacing:.08em}
+ .mobileDock{padding-left:3px;padding-right:3px;gap:0}
+ .mobileDock button{font-size:9px}
+ .paper{padding-left:12px!important;padding-right:12px!important}
+ .paperTitle{font-size:14px}
+ .viewSwitch button{padding-left:6px;padding-right:6px}
+}
+@media(prefers-reduced-motion:reduce){.mobileSheetBackdrop,.mobileToolsPanel{transition:none!important}}
+
 </style><style id="syntopoBraceTransitionRules"></style></head>
 <body><div class="app" id="app"><header class="bar">
-<button class="b square tip" id="toggleRail" data-tip="打开／收起文稿栏" aria-label="文稿栏">☰</button><div class="logo">句拓 <small>SY N T O P O · Reader</small></div>
+<button class="b square tip" id="toggleRail" data-tip="打开／收起文稿栏" aria-label="文稿栏">☰</button><div class="logo">句拓 <small>SY N T O P O · Reader</small></div><span class="mobileBrandSub" aria-hidden="true">SYNTOPO</span><button class="b mobileToolsOpen" id="mobileToolsOpen" type="button" aria-label="打开编辑工具" aria-haspopup="dialog" aria-expanded="false">工具 <span aria-hidden="true">···</span></button>
 
 <button class="b square tip" id="undoStructure" data-tip="撤销结构操作 · Ctrl+Z" aria-label="撤销" title="撤销">↶</button><button class="b square tip" id="redoStructure" data-tip="重做结构操作 · Ctrl+Shift+Z" aria-label="重做" title="重做">↷</button>
 <button class="b tip" id="autoMark" data-tip="本地规则标记，不调用模型，也不改写字句">规则分组</button>
@@ -1928,4 +2021,50 @@ renderLibrary();
 window.addEventListener('resize',()=>requestAnimationFrame(()=>{alignForeignAnnotations();alignSentenceStops()}),{passive:true});
 render();
 })();
-</script></body></html>
+</script>
+<!-- Touch-first reading transport: only visible below 650px. Desktop controls remain unchanged. -->
+<nav id="mobileDock" class="mobileDock" aria-label="移动端阅读控制">
+ <button type="button" id="mdLibrary" aria-label="文稿与段落目录"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM9 8h7M9 12h7M9 16h5"/></svg><span>文稿</span></button>
+ <button type="button" id="mdRaw" aria-label="切换原文对照" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 7h17m0 0-4-4m4 4-4 4M21 17H4m0 0 4-4m-4 4 4 4"/></svg><span>原文</span></button>
+ <button type="button" id="mdPrev" aria-label="上一个语义片段"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg><span>上句</span></button>
+ <button type="button" id="mdPlay" class="mobilePlay" aria-label="开始阅读播放" aria-pressed="false"><svg id="mdPlayIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span id="mdPlayLabel">阅读</span></button>
+ <button type="button" id="mdNext" aria-label="下一个语义片段"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg><span>下句</span></button>
+ <button type="button" id="mdPrefs" aria-label="打开设置"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 4v6M16 14v6"/><circle cx="8" cy="7" r="2"/><circle cx="16" cy="17" r="2"/></svg><span>设置</span></button>
+</nav>
+<button id="mobileSheetBackdrop" class="mobileSheetBackdrop" type="button" aria-label="关闭弹出面板"></button>
+<div id="mobileToolsPanel" class="mobileToolsPanel" role="dialog" aria-modal="true" aria-label="编辑与工具" aria-hidden="true">
+ <div class="mobileSheetHeader"><strong>编辑与工具</strong><button id="mobileToolsClose" type="button" aria-label="关闭">×</button></div>
+ <div class="mobileToolTitle">文稿与结构</div>
+ <div class="mobileToolsGrid"><button data-mobile-target="openSource"><span class="toolSymbol">✎</span>编辑全文</button><button data-mobile-target="autoMark"><span class="toolSymbol">⌁</span>规则分组</button><button data-mobile-target="save"><span class="toolSymbol">⇩</span>导出文稿</button></div>
+ <div class="mobileToolTitle">撤销与排版</div>
+ <div class="mobileToolsGrid"><button data-mobile-target="undoStructure"><span class="toolSymbol">↶</span>撤销</button><button data-mobile-target="redoStructure"><span class="toolSymbol">↷</span>重做</button><button data-mobile-target="readingSpeed"><span class="toolSymbol">◷</span><span id="mobileSpeedLabel">速度 1×</span></button><button data-mobile-target="sizeDown"><span class="toolSymbol">A−</span>缩小字号</button><button data-mobile-target="sizeUp"><span class="toolSymbol">A+</span>放大字号</button><button data-mobile-action="reading"><span class="toolSymbol">☷</span>阅读设置</button></div>
+</div>
+<script>
+(() => {
+ const q=id=>document.getElementById(id);
+ const isMobile=()=>window.matchMedia('(max-width:650px)').matches;
+ const overlay=q('mobileSheetBackdrop'),tools=q('mobileToolsPanel');
+ const clearTools=()=>{tools.classList.remove('open');tools.setAttribute('aria-hidden','true');q('mobileToolsOpen').setAttribute('aria-expanded','false')};
+ const dismiss=()=>{clearTools();q('notationPanel').classList.remove('open');q('gearMenu').classList.remove('open');q('notationBtn').setAttribute('aria-expanded','false');q('notationBtn').dataset.open='false'};
+ function syncOverlay(){overlay.classList.toggle('is-open',isMobile()&&(tools.classList.contains('open')||q('notationPanel').classList.contains('open')||q('gearMenu').classList.contains('open')))}
+ function syncDock(){const active=q('play').getAttribute('aria-pressed')==='true',raw=q('toggleRaw').getAttribute('aria-pressed')==='true';q('mdRaw').setAttribute('aria-pressed',String(raw));q('mdRaw').querySelector('span').textContent=raw?'结构':'原文';q('mdPlay').disabled=raw;q('mdPlay').setAttribute('aria-pressed',String(active));q('mdPlay').setAttribute('aria-label',active?'暂停阅读播放':'开始阅读播放');q('mdPlayLabel').textContent=active?'暂停':'阅读';q('mdPlayIcon').innerHTML=active?'<path d="M8 5v14M16 5v14"/>':'<path d="M8 5v14l11-7z"/>';q('mobileSpeedLabel').textContent='速度 '+q('readingSpeed').textContent;for(const id of ['undoStructure','redoStructure']){const btn=tools.querySelector('[data-mobile-target="'+id+'"]');if(btn)btn.disabled=q(id).disabled;}}
+ new MutationObserver(syncOverlay).observe(tools,{attributes:true,attributeFilter:['class']});
+ for(const id of ['notationPanel','gearMenu'])new MutationObserver(syncOverlay).observe(q(id),{attributes:true,attributeFilter:['class']});
+ for(const id of ['play','toggleRaw','undoStructure','redoStructure','readingSpeed'])new MutationObserver(syncDock).observe(q(id),{attributes:true,childList:true,characterData:true,subtree:true,attributeFilter:['aria-pressed','disabled']});
+ q('mobileToolsOpen').addEventListener('click',()=>{const open=!tools.classList.contains('open');dismiss();if(open){tools.classList.add('open');tools.setAttribute('aria-hidden','false');q('mobileToolsOpen').setAttribute('aria-expanded','true')}});
+ q('mobileToolsClose').addEventListener('click',dismiss);
+ overlay.addEventListener('click',dismiss);
+ q('mdLibrary').addEventListener('click',()=>{dismiss();q('toggleRail').click()});
+ q('mdRaw').addEventListener('click',()=>q('toggleRaw').click());
+ q('mdPrev').addEventListener('click',()=>q('prev').click());
+ q('mdNext').addEventListener('click',()=>q('next').click());
+ q('mdPlay').addEventListener('click',()=>q('play').click());
+ q('mdPrefs').addEventListener('click',()=>{clearTools();q('notationBtn').click()});
+ tools.querySelectorAll('[data-mobile-target]').forEach(btn=>btn.addEventListener('click',()=>{const id=btn.dataset.mobileTarget;clearTools();q(id).click();}));
+ tools.querySelector('[data-mobile-action="reading"]').addEventListener('click',()=>{clearTools();q('notationBtn').click();q('[data-gear-action="reading"]').click()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')dismiss()});
+ window.addEventListener('resize',()=>{if(!isMobile())dismiss();syncOverlay()});
+ syncDock();syncOverlay();
+})();
+</script>
+</body></html>
