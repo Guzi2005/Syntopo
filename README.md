@@ -13,7 +13,7 @@ Syntopo（句拓）是一款实验性的**视觉句法阅读器**。它不改变
 
 ![句拓阅读器完整界面：左侧文稿与段落导航，右侧按句法关系展开的正文](assets/reader-overview.png)
 
-<sub>图：v0.31 实际浏览器截图，示例文本为阅读障碍相关说明；该项目不是医疗诊断工具。</sub>
+<sub>图：v0.31 桌面版实际浏览器截图，示例文本为阅读障碍相关说明；该项目不是医疗诊断工具。</sub>
 
 ## 01 / 看见句子的层次
 
@@ -38,7 +38,7 @@ Syntopo（句拓）是一款实验性的**视觉句法阅读器**。它不改变
 <table>
 <tr>
 <td width="68%" valign="top"><img src="assets/style-settings.png" alt="视觉语法样式设置：符号、注记与配色" /><br /><sub>视觉语法与注记设置</sub></td>
-<td width="32%" valign="top"><img src="assets/mobile-reading.png" alt="移动端原文对照视图" /><br /><sub>移动端 · 原文模式</sub></td>
+<td width="32%" valign="top"><img src="assets/mobile-reading.png" alt="移动端结构阅读视图：已修复嵌套对位括线引起的异常留白" /><br /><sub>移动端 · 结构阅读（v0.32）</sub></td>
 </tr>
 </table>
 
@@ -55,7 +55,7 @@ Syntopo（句拓）是一款实验性的**视觉句法阅读器**。它不改变
 
 ### 项目状态
 
-- **当前截图与阅读器版本：v0.31**。项目仍处于实验迭代阶段，部分复杂嵌套和窄屏排版仍需打磨。
+- **当前阅读器版本：v0.32**。移动端嵌套对位括线的异常留白已修复，项目仍处于实验迭代阶段，更多复杂布局仍在完善。
 - **本地优先**：阅读器主体为单文件静态网页；某些格式的文档解析会按需加载第三方浏览器端依赖。扫描版 PDF 不包含 OCR。
 - **GitHub Pages**：工作流位于 [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml)。需先到仓库 **Settings → Pages → Build and deployment** 将 Source 设为 **GitHub Actions**，再确认 Actions 部署成功。不能仅凭仓库公开就认定网站已经上线。
 - **版权与授权**：目前尚未发布开源许可证；公开可见不代表自动授予使用、修改及再分发的权利。
